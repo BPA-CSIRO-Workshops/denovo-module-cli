@@ -1,0 +1,181 @@
+% Set some Workshop specific info
+%\setWorkshopTitle{Introduction to Command Line}
+\setModuleAuthors{%
+  Sean Mcwilliam \mailto{Sean.Mcwilliam@csiro.au}
+}
+\setModuleContributions{%
+  Sean Mcwilliam \mailto{Sean.Mcwilliam@csiro.au}
+}
+
+
+% Start: Module Title Page
+\chapter{\moduleTitle}
+\newpage
+% End: Module Title Page
+
+\section{Key Learning Outcomes}
+
+After completing this practical the trainee should be able to:
+\begin{itemize}
+  \item 
+  \item 
+  \item 
+\end{itemize}
+
+\section{Resources You'll be Using}
+ 
+%\subsection{Tools Used}
+%\begin{description}[style=multiline,labelindent=0cm,align=left,leftmargin=0.5cm]
+%  \item 
+%\end{description}
+
+\section{Useful Links}
+ 
+\begin{description}[style=multiline,labelindent=0cm,align=left,leftmargin=0.5cm]
+  \item [Software Carpentry]\hfill\\
+    \url{https://software-carpentry.org}
+\end{description}
+%\begin{information}
+%Information to be provided to the trainee.
+%\end{information}
+
+\newpage
+\section{Shell Exercise.}
+
+\begin{information}
+Let's try out your new shell skills on some real data.
+
+The file 1000gp.vcf is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
+The ``vcf'' extension lets us know that it's in a specific text format, namely ``Variant Call Format''. The file starts with a bunch of comment lines (they start with ``#'' or ``##''), and then a large number of data lines. This VCF file lists the differences between the three African individuals and a standard ``individual'' called the reference (actually based upon a few different people). Each line in the file corresponds to a difference. The line tells us the position of the difference (chromosome and position), the genetic sequence in the reference, and the corresponding sequence in each of the three Africans.
+Before we start processing the file, let's get a high-level view of the file that we're about to work with.
+
+\end{information}
+
+\begin{steps}
+Open the Terminal and go to the directory where the data are stored:
+\begin{lstlisting}
+ls
+cd %directory name
+pwd
+ls -lh 1000gp.vcf
+wc -l 1000gp.vcf
+\end{lstlisting}
+\end{steps}
+
+\begin{questions}
+What's the file size (in kilo-bytes), and how many lines are in the file?. (Hint: \texttt{man ls}, \texttt{man wc})
+\begin{answer}
+3.6M
+45034 lines
+\end{answer}
+\end{questions}
+
+
+\begin{note}
+Because this file is so large, you're going to almost always want to pipe (``|'') the result of any command to less (a simple text viewer, type  `\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
+\end{note}
+
+\begin{steps}
+Let's start by printing the first 5 lines to see what it looks like.
+\begin{lstlisting}
+head -5 1000gp.vcf
+\end{lstlisting}
+\end{steps}
+
+\begin{note}
+That isn't very interesting; it's just a bunch of the comments at the beginning of the file (they all start with ``#'')! 
+\end{note}
+
+\begin{steps}
+Print the first 20 lines to see more of the file.
+\begin{lstlisting}
+head -20 1000gp.vcf
+\end{lstlisting}
+\end{steps}
+
+\begin{note}
+Okay, so now we can see the basic structure of the file. A few comment lines that start with ``#'' or ``##'' and then a bunch of lines of data that contain all the data and are pretty hard to understand. Each line of data contains the same number of fields, and all fields are separated with TABs. These fields are:
+\begin{enumerate}[style=multiline,labelindent=0cm,align=left,leftmargin=0.5cm]
+\item the chromosome (which volume the difference is in)
+\item the position (which character in the volume the difference starts at)
+\item the ID of the difference
+\item the sequence in the reference human(s)
+\end{enumerate}
+The rest of the columns tell us, in a rather complex way, a bunch of additional information about that position, including: the predicted sequence for each of the three Africans and how confident the scientists are that these sequences are correct.
+
+To start analyzing the actual data, we have to remove the header.
+\end{note}
+
+\begin{questions}
+How can we print the first 10 non-header lines (those that don't start with a ``#'')?(Hint: \texttt{man grep} (remember to use pipes ``|''))
+\begin{answers}
+grep -v "^#" 1000gp.vcf | head
+\end{answer}
+\end{questions}
+
+\begin{questions}
+How many lines of data are in the file (rather than counting the number of header lines and subtracting, try just counting the number of data lines)?
+\begin{answer}
+grep -v "^#" 1000gp.vcf | wc -l (should print 45024)
+\end{answer}
+\end{questions}
+
+\begin{note}
+Where these differences are located can be important. If all the differences between two encyclopedias were in just the first volume, that would be interesting. The first field of each data line is the name of the chromosome that the difference occurs on (which volume we're on). 
+\end{note}
+
+\begin{questions}
+Print the first 10 chromosomes, one per line. 
+
+Hint: \texttt{man cut} (remember to remove header lines first)
+\begin{answer}
+grep -v "^#" 1000gp.vcf | cut -f 1 | head
+\end{answer}
+\end{questions}
+
+\begin{note}
+As you should have observed, the first 10 lines are on numbered chromosomes. Every normal cell in your body has 23 pairs of chromosomes, 22 pairs of ``autosomal'' chromosomes (these are numbered 1-22) and a pair of sex chromosomes (two Xs if you're female, an X and a Y if you're male).
+
+Let's look at which chromosomes these variations are on. 
+
+\end{note}
+\begin{questions}
+Print a list of the chromosomes that are in the file (each chromosome name should only be printed once, so you should only print 23 lines).
+
+Hint: remove all duplicates from your previous answer (\texttt{man sort})
+\begin{answer}
+grep -v "^#" 1000gp.vcf | cut -f 1 | sort -u
+\end{answer}
+\end{questions}
+
+\begin{note}
+Rather than using \texttt{sort} to print unique results, a common pipeline is to first sort and then pipe to another UNIX command, \texttt{uniq}. The \texttt{uniq} command takes sorted input and prints only unique lines, but it provides more flexibility than just using sort by itself. Keep in mind, if the input isn't sorted, \texttt{uniq} won't work properly.
+\end{note}
+
+\begin{questions}
+Using \texttt{sort} and \texttt{uniq}, print the number of times each chromosome occurs in the file.
+
+Hint: \texttt{man uniq}
+\begin{answer}
+grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c
+\end{answer}
+Add to your previous solution to list the chromosomes from most frequently observed to least frequently observed.
+
+Hint: Make sure you're sorting in descending order. By default, sort sorts in ascending order.
+\begin{answer}
+grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -n -r
+\end{answer}
+\end{questions}
+
+
+\begin{note}
+This is great, but biologists might also like to see the chromosomes ordered by their number (not dictionary order), since different chromosomes have different attributes and this ordering allows them to find a specific chromosome more easily.
+\end{note}
+\begin{questions}
+Sort the previous output by chromosome number
+
+Hint: A lot of the power of sort comes from the fact that you can specify which fields to sort on, and the order in which to sort them. In this case you only need to sort on one field.
+\begin{answer}
+grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -k 2n
+\end{answer}
+\end{questions}
