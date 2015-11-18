@@ -46,7 +46,7 @@ After completing this practical the trainee should be able to:
 \begin{information}
 Let's try out your new shell skills on some real data.
 
-The file 1000gp.vcf is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
+The file \texttt{1000gp.vcf} is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
 The ``vcf'' extension lets us know that it's in a specific text format, namely ``Variant Call Format''. The file starts with a bunch of comment lines (they start with ``#'' or ``##''), and then a large number of data lines. This VCF file lists the differences between the three African individuals and a standard ``individual'' called the reference (actually based upon a few different people). Each line in the file corresponds to a difference. The line tells us the position of the difference (chromosome and position), the genetic sequence in the reference, and the corresponding sequence in each of the three Africans.
 Before we start processing the file, let's get a high-level view of the file that we're about to work with.
 
