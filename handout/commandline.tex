@@ -1,5 +1,8 @@
 % Set some Workshop specific info
-%\setWorkshopTitle{Introduction to Command Line}
+
+\setModuleTitle{Introduction to Command Line}
+
+
 \setModuleAuthors{%
   Sean Mcwilliam \mailto{Sean.Mcwilliam@csiro.au}
 }
@@ -46,7 +49,7 @@ After completing this practical the trainee should be able to:
 \begin{information}
 Let's try out your new shell skills on some real data.
 
-The file \texttt{1000gp.vcf} is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
+The file \texttt{1000gp.vcf} is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.1000genomes.org}).
 The ``vcf'' extension lets us know that it's in a specific text format, namely ``Variant Call Format''. The file starts with a bunch of comment lines (they start with ``#'' or ``##''), and then a large number of data lines. This VCF file lists the differences between the three African individuals and a standard ``individual'' called the reference (actually based upon a few different people). Each line in the file corresponds to a difference. The line tells us the position of the difference (chromosome and position), the genetic sequence in the reference, and the corresponding sequence in each of the three Africans.
 Before we start processing the file, let's get a high-level view of the file that we're about to work with.
 
@@ -55,8 +58,8 @@ Before we start processing the file, let's get a high-level view of the file tha
 \begin{steps}
 Open the Terminal and go to the directory where the data are stored:
 \begin{lstlisting}
-ls
 cd /home/trainee/cmd_intro
+ls
 pwd
 ls -lh 1000gp.vcf
 wc -l 1000gp.vcf
@@ -73,7 +76,7 @@ What's the file size (in kilo-bytes), and how many lines are in the file?. (Hint
 
 
 \begin{note}
-Because this file is so large, you're going to almost always want to pipe (``|'') the result of any command to less (a simple text viewer, type  `\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
+Because this file is so large, you're going to almost always want to pipe (\textpipe) the result of any command to less (a simple text viewer, type  `\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
 \end{note}
 
 \begin{steps}
