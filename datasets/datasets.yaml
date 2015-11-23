@@ -1,0 +1,9 @@
+btp::modules:
+ cli:
+   dirs:
+     - 'cli'
+   data:
+     1000gp.vcf: 
+       source: 'https://s3-ap-southeast-2.amazonaws.com/denovo-data-cli'
+       targets: 
+         - 'cli/1000gp.vcf'
