@@ -40,7 +40,7 @@ After completing this practical the trainee should be able to:
   \item [Software Carpentry]\hfill\\
     \url{https://software-carpentry.org}
   \item [1000Genome Project data for example]\hfill\\
-    \url{http://www.1000genomes.org})
+    \url{http://www.1000genomes.org}
 \end{description}
 %\begin{information}
 %Information to be provided to the trainee.
@@ -114,7 +114,7 @@ To start analyzing the actual data, we have to remove the header.
 \end{note}
 
 \begin{questions}
-How can we print the first 10 non-header lines (those that don't start with a `\#')?(Hint: \texttt{man grep} (remember to use pipes `|'))
+How can we print the first 10 non-header lines (those that don't start with a `\#')?(Hint: \texttt{man grep} (remember to use pipes \textpipe))
 \begin{answer}
 \begin{lstlisting}
 grep -v "\^\#" 1000gp.vcf | head  
