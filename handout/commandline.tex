@@ -53,7 +53,7 @@ After completing this practical the trainee should be able to:
 Let's try out your new shell skills on some real data.
 
 The file \texttt{1000gp.vcf} is a small sample (1\%) of a very large text file containing human genetics data. Specifically, it describes genetic variation in three African individuals sequenced as part of the 1000 Genomes Project(\url{http://www.1000genomes.org}).
-The ``vcf'' extension lets us know that it's in a specific text format, namely ``Variant Call Format''. The file starts with a bunch of comment lines (they start with ``#'' or ``##''), and then a large number of data lines. This VCF file lists the differences between the three African individuals and a standard ``individual'' called the reference (actually based upon a few different people). Each line in the file corresponds to a difference. The line tells us the position of the difference (chromosome and position), the genetic sequence in the reference, and the corresponding sequence in each of the three Africans.
+The 'vcf' extension lets us know that it's in a specific text format, namely 'Variant Call Format' The file starts with a bunch of comment lines (they start with '\#' or '\#\#'), and then a large number of data lines. This VCF file lists the differences between the three African individuals and a standard 'individual' called the reference (actually based upon a few different people). Each line in the file corresponds to a difference. The line tells us the position of the difference (chromosome and position), the genetic sequence in the reference, and the corresponding sequence in each of the three Africans.
 Before we start processing the file, let's get a high-level view of the file that we're about to work with.
 
 \end{information}
@@ -79,7 +79,7 @@ What's the file size (in kilo-bytes), and how many lines are in the file?. (Hint
 
 
 \begin{note}
-Because this file is so large, you're going to almost always want to pipe (\textpipe) the result of any command to less (a simple text viewer, type  `\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
+Because this file is so large, you're going to almost always want to pipe ('|') the result of any command to less (a simple text viewer, type `\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
 \end{note}
 
 \begin{steps}
@@ -90,7 +90,7 @@ head -5 1000gp.vcf
 \end{steps}
 
 \begin{note}
-That isn't very interesting; it's just a bunch of the comments at the beginning of the file (they all start with ``#'')! 
+That isn't very interesting; it's just a bunch of the comments at the beginning of the file (they all start with '\#')! 
 \end{note}
 
 \begin{steps}
@@ -101,7 +101,7 @@ head -20 1000gp.vcf
 \end{steps}
 
 \begin{note}
-Okay, so now we can see the basic structure of the file. A few comment lines that start with ``#'' or ``##'' and then a bunch of lines of data that contain all the data and are pretty hard to understand. Each line of data contains the same number of fields, and all fields are separated with TABs. These fields are:
+Okay, so now we can see the basic structure of the file. A few comment lines that start with '\#' or '\#\#' and then a bunch of lines of data that contain all the data and are pretty hard to understand. Each line of data contains the same number of fields, and all fields are separated with TABs. These fields are:
 \begin{enumerate}[style=multiline,labelindent=0cm,align=left,leftmargin=0.5cm]
 \item the chromosome (which volume the difference is in)
 \item the position (which character in the volume the difference starts at)
@@ -114,16 +114,16 @@ To start analyzing the actual data, we have to remove the header.
 \end{note}
 
 \begin{questions}
-How can we print the first 10 non-header lines (those that don't start with a ``#'')?(Hint: \texttt{man grep} (remember to use pipes ``|''))
-\begin{answers}
-grep -v "^#" 1000gp.vcf | head
+How can we print the first 10 non-header lines (those that don't start with a '\#')?(Hint: \texttt{man grep} (remember to use pipes '|'))
+\begin{answer}
+grep -v "\^\#" 1000gp.vcf | head
 \end{answer}
 \end{questions}
 
 \begin{questions}
 How many lines of data are in the file (rather than counting the number of header lines and subtracting, try just counting the number of data lines)?
 \begin{answer}
-grep -v "^#" 1000gp.vcf | wc -l (should print 45024)
+grep -v "\^\#" 1000gp.vcf | wc -l (should print 45024)
 \end{answer}
 \end{questions}
 
@@ -136,7 +136,7 @@ Print the first 10 chromosomes, one per line.
 
 Hint: \texttt{man cut} (remember to remove header lines first)
 \begin{answer}
-grep -v "^#" 1000gp.vcf | cut -f 1 | head
+grep -v "\^\#" 1000gp.vcf | cut -f 1 | head
 \end{answer}
 \end{questions}
 
@@ -151,7 +151,7 @@ Print a list of the chromosomes that are in the file (each chromosome name shoul
 
 Hint: remove all duplicates from your previous answer (\texttt{man sort})
 \begin{answer}
-grep -v "^#" 1000gp.vcf | cut -f 1 | sort -u
+grep -v "\^\#" 1000gp.vcf | cut -f 1 | sort -u
 \end{answer}
 \end{questions}
 
@@ -164,13 +164,13 @@ Using \texttt{sort} and \texttt{uniq}, print the number of times each chromosome
 
 Hint: \texttt{man uniq}
 \begin{answer}
-grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c
+grep -v "\^\#" 1000gp.vcf | cut -f 1 | sort | uniq -c
 \end{answer}
 Add to your previous solution to list the chromosomes from most frequently observed to least frequently observed.
 
 Hint: Make sure you're sorting in descending order. By default, sort sorts in ascending order.
 \begin{answer}
-grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -n -r
+grep -v "\^\#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -n -r
 \end{answer}
 \end{questions}
 
@@ -183,6 +183,6 @@ Sort the previous output by chromosome number
 
 Hint: A lot of the power of sort comes from the fact that you can specify which fields to sort on, and the order in which to sort them. In this case you only need to sort on one field.
 \begin{answer}
-grep -v "^#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -k 2n
+grep -v "\^\#" 1000gp.vcf | cut -f 1 | sort | uniq -c | sort -k 2n
 \end{answer}
 \end{questions}
