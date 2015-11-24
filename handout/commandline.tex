@@ -79,7 +79,7 @@ What's the file size (in kilo-bytes), and how many lines are in the file?. (Hint
 
 
 \begin{note}
-Because this file is so large, you're going to almost always want to pipe ('|') the result of any command to less (a simple text viewer, type '\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
+Because this file is so large, you're going to almost always want to pipe (\texttt{\textbar}) the result of any command to less (a simple text viewer, type '\texttt{q}' to exit) or head (to print the first 10 lines) so that you don't accidentally print 45,000 lines to the screen.
 \end{note}
 
 \begin{steps}
@@ -114,7 +114,7 @@ To start analyzing the actual data, we have to remove the header.
 \end{note}
 
 \begin{questions}
-How can we print the first 10 non-header lines (those that don't start with a '\#')?(Hint: \texttt{man grep} (remember to use pipes '|'))
+How can we print the first 10 non-header lines (those that don't start with a '\#')?(Hint: \texttt{man grep} (remember to use pipes \texttt{\textbar}))
 \begin{answer}
 \begin{lstlisting}
 grep -v "\^\#" 1000gp.vcf | head  
