@@ -15,9 +15,7 @@ Bioinformatics Training Platform (BTP) Module: Introduction to Command Line
     * Navigration of biological data files structure and manipulation
   * Time Required
     * 2 hrs
-  * Compute Requirements
-    * 
-	
+
 License
 =======
 The contents of this repository are released under the Creative Commons
