@@ -14,7 +14,7 @@ Bioinformatics Training Platform (BTP) Module: Introduction to Command Line
     * Run some basic linux system and file operation commands
     * Navigration of biological data files structure and manipulation
   * Time Required
-    * 
+    * 2 hrs
   * Compute Requirements
     * 
 	
